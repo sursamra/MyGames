@@ -1,0 +1,48 @@
+﻿@section JavaScript{
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/ScriptsGames/GamesController.js"></script>
+}
+<body id="content" ng-controller="GamesController">    
+        <div>
+            <span>Time Remaining {{ CountDown.minutes }}:{{ CountDown.seconds }}</span>            
+        </div>        
+        <h2>My Games</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Game Mode</th>
+                    <th align="center" colspan="3" scope="colgroup">Game Moves</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="gameModel in ListGames">
+                <tr>
+                    <td ng-bind="gameModel.GameName"></td>
+                    <td>
+                        <div ng-if="gameModel.Mode == 1">
+                            <a href="#" ng-click="playGame(gameModel,gameMove)" title="Cick me to play {{gameModel.GameName}} as {{gameModel.ModeName}}">
+                                <img src="~/Content/images/{{gameModel.ModeName}}.png" />
+                            </a>
+                        </div>
+                        <div ng-if="gameModel.Mode == 0">
+                            <img src="~/Content/images/{{gameModel.ModeName}}.png" title="To play  {{gameModel.GameName}} as {{gameModel.ModeName}} Please select your moves from buttons" />
+                        </div>
+                    </td>
+                    <td ng-repeat="gameMove in gameModel.UserMoves">
+                        <div ng-if="gameModel.Mode == 0">
+                            <button ng-click="playGame(gameModel,gameMove)">{{gameMove}}</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-if="gameModel.Mode == 0">
+                            {{gameModel.UserScore}} -  {{gameModel.ComputerScore}}
+                        </div>
+                        <div ng-if="gameModel.Mode == 1">
+                            {{gameModel.WhiteComputer}} -  {{gameModel.BlackComputer}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</body>
